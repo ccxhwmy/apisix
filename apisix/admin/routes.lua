@@ -176,6 +176,7 @@ function _M.put(id, conf, sub_path, args)
 
     local key = "/routes/" .. id
 
+    core.log.error("key: ", key)
     local ok, err = utils.inject_conf_with_prev_conf("route", key, conf)
     if not ok then
         return 503, {error_msg = err}

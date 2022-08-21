@@ -149,6 +149,7 @@ local function run()
         end
     end
 
+    core.log.error("seg_res: ", seg_res)
     local resource = resources[seg_res]
     if not resource then
         core.response.exit(404, {error_msg = "not found"})
@@ -184,6 +185,7 @@ local function run()
         end
     end
 
+    core.log.error("seg_id: ", seg_id, ", req_body: ", core.json.encode(req_body), ", seg_sub_path: ", seg_sub_path, ", uri_args: ", core.json.encode(uri_args))
     local code, data = resource[method](seg_id, req_body, seg_sub_path,
                                         uri_args)
     if code then

@@ -805,7 +805,7 @@ function _M.http_admin()
     -- add content type to rsp header
     add_content_type()
 
-    -- core.log.info("uri: ", get_var("uri"), " method: ", get_method())
+    core.log.error("uri: ", get_var("uri"), " method: ", get_method())
     local ok = router:dispatch(get_var("uri"), {method = get_method()})
     if not ok then
         ngx_exit(404)

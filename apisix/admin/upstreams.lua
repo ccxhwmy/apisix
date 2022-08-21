@@ -64,6 +64,7 @@ end
 
 
 function _M.put(id, conf)
+    core.log.error("id: ", id, ", conf:", core.json.encode(conf))
     local id, err = check_conf(id, conf, true)
     if not id then
         return 400, err

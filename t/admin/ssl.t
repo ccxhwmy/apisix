@@ -38,13 +38,10 @@ __DATA__
                 ngx.HTTP_PUT,
                 core.json.encode(data),
                 [[{
-                    "node": {
-                        "value": {
-                            "sni": "test.com"
-                        },
-                        "key": "/apisix/ssls/1"
+                    "value": {
+                        "sni": "test.com"
                     },
-                    "action": "set"
+                    "key": "/apisix/ssls/1"
                 }]]
                 )
 
@@ -77,15 +74,11 @@ passed
                 ngx.HTTP_GET,
                 nil,
                 [[{
-                    "node": {
-                        "value": {
-                            "sni": "test.com",
-                            "key": null
-                        },
-
-                        "key": "/apisix/ssls/1"
+                    "value": {
+                        "sni": "test.com",
+                        "key": null
                     },
-                    "action": "get"
+                    "key": "/apisix/ssls/1"
                 }]]
                 )
 
@@ -107,13 +100,7 @@ passed
     location /t {
         content_by_lua_block {
             local t = require("lib.test_admin").test
-            local code, message = t('/apisix/admin/ssls/1',
-                 ngx.HTTP_DELETE,
-                 nil,
-                 [[{
-                    "action": "delete"
-                }]]
-                )
+            local code, message = t('/apisix/admin/ssls/1', ngx.HTTP_DELETE)
             ngx.say("[delete] code: ", code, " message: ", message)
         }
     }
@@ -131,13 +118,7 @@ GET /t
     location /t {
         content_by_lua_block {
             local t = require("lib.test_admin").test
-            local code = t('/apisix/admin/ssls/99999999999999',
-                 ngx.HTTP_DELETE,
-                 nil,
-                 [[{
-                    "action": "delete"
-                }]]
-                )
+            local code = t('/apisix/admin/ssls/99999999999999', ngx.HTTP_DELETE)
             ngx.say("[delete] code: ", code)
         }
     }
@@ -165,12 +146,9 @@ GET /t
                 ngx.HTTP_POST,
                 core.json.encode(data),
                 [[{
-                    "node": {
-                        "value": {
-                            "sni": "foo.com"
-                        }
-                    },
-                    "action": "create"
+                    "value": {
+                        "sni": "foo.com"
+                    }
                 }]]
                 )
 
@@ -182,14 +160,8 @@ GET /t
 
             ngx.say("[push] code: ", code, " message: ", message)
 
-            local id = string.sub(res.node.key, #"/apisix/ssls/" + 1)
-            code, message = t.test('/apisix/admin/ssls/' .. id,
-                 ngx.HTTP_DELETE,
-                 nil,
-                 [[{
-                    "action": "delete"
-                }]]
-            )
+            local id = string.sub(res.key, #"/apisix/ssls/" + 1)
+            code, message = t.test('/apisix/admin/ssls/' .. id, ngx.HTTP_DELETE)
             ngx.say("[delete] code: ", code, " message: ", message)
         }
     }
@@ -218,13 +190,10 @@ GET /t
                 ngx.HTTP_PUT,
                 core.json.encode(data),
                 [[{
-                    "node": {
-                        "value": {
-                            "sni": "foo.com"
-                        },
-                        "key": "/apisix/ssls/1"
+                    "value": {
+                        "sni": "foo.com"
                     },
-                    "action": "set"
+                    "key": "/apisix/ssls/1"
                 }]]
                 )
 
@@ -257,13 +226,10 @@ GET /t
                 ngx.HTTP_PUT,
                 core.json.encode(data),
                 [[{
-                    "node": {
-                        "value": {
-                            "sni": "*.foo.com"
-                        },
-                        "key": "/apisix/ssls/1"
+                    "value": {
+                        "sni": "*.foo.com"
                     },
-                    "action": "set"
+                    "key": "/apisix/ssls/1"
                 }]]
                 )
 
@@ -298,13 +264,10 @@ passed
                 ngx.HTTP_PUT,
                 core.json.encode(data),
                 [[{
-                    "node": {
-                        "value": {
-                            "snis": ["*.foo.com", "bar.com"]
-                        },
-                        "key": "/apisix/ssls/1"
+                    "value": {
+                        "snis": ["*.foo.com", "bar.com"]
                     },
-                    "action": "set"
+                    "key": "/apisix/ssls/1"
                 }]]
                 )
 
@@ -340,14 +303,11 @@ passed
                 ngx.HTTP_PUT,
                 core.json.encode(data),
                 [[{
-                    "node": {
-                        "value": {
-                            "sni": "bar.com",
-                            "exptime": 1619798400
-                        },
-                        "key": "/apisix/ssls/1"
+                    "value": {
+                        "sni": "bar.com",
+                        "exptime": 1619798400
                     },
-                    "action": "set"
+                    "key": "/apisix/ssls/1"
                 }]]
                 )
 
@@ -475,13 +435,10 @@ GET /t
                 ngx.HTTP_PUT,
                 core.json.encode(data),
                 [[{
-                    "node": {
-                        "value": {
-                            "sni": "test.com"
-                        },
-                        "key": "/apisix/ssls/1"
+                    "value": {
+                        "sni": "test.com"
                     },
-                    "action": "set"
+                    "key": "/apisix/ssls/1"
                 }]]
               )
 
@@ -517,13 +474,10 @@ passed
                 ngx.HTTP_PUT,
                 core.json.encode(data),
                 [[{
-                    "node": {
-                        "value": {
-                            "sni": "test.com"
-                        },
-                        "key": "/apisix/ssls/1"
+                    "value": {
+                        "sni": "test.com"
                     },
-                    "action": "set"
+                    "key": "/apisix/ssls/1"
                 }]]
                 )
 
@@ -556,19 +510,15 @@ GET /t
                 ngx.HTTP_PUT,
                 core.json.encode(data),
                 [[{
-                    "node": {
-                        "value": {
-                            "sni": "test.com",
-                            "labels": {
-                                "version": "v2",
-                                "build": "16",
-                                "env": "production"
-                            }
-                        },
-
-                        "key": "/apisix/ssls/1"
+                    "value": {
+                        "sni": "test.com",
+                        "labels": {
+                            "version": "v2",
+                            "build": "16",
+                            "env": "production"
+                        }
                     },
-                    "action": "set"
+                    "key": "/apisix/ssls/1"
                 }]]
                 )
 
@@ -600,17 +550,13 @@ passed
                 ngx.HTTP_PUT,
                 core.json.encode(data),
                 [[{
-                    "node": {
-                        "value": {
-                            "sni": "test.com",
-                            "labels": {
-                                "env": ["production", "release"]
-                            }
-                        },
-
-                        "key": "/apisix/ssls/1"
+                    "value": {
+                        "sni": "test.com",
+                        "labels": {
+                            "env": ["production", "release"]
+                        }
                     },
-                    "action": "set"
+                    "key": "/apisix/ssls/1"
                 }]]
                 )
 
@@ -651,17 +597,14 @@ GET /t
                 ngx.HTTP_PUT,
                 core.json.encode(data),
                 [[{
-                    "node": {
-                        "value": {
-                            "sni": "test.com",
-                            "create_time": 1602883670,
-                            "update_time": 1602893670,
-                            "validity_start": 1602873670,
-                            "validity_end": 1603893670
-                        },
-                        "key": "/apisix/ssls/1"
+                    "value": {
+                        "sni": "test.com",
+                        "create_time": 1602883670,
+                        "update_time": 1602893670,
+                        "validity_start": 1602873670,
+                        "validity_end": 1603893670
                     },
-                    "action": "set"
+                    "key": "/apisix/ssls/1"
                 }]]
                 )
 
@@ -683,13 +626,7 @@ passed
     location /t {
         content_by_lua_block {
             local t = require("lib.test_admin").test
-            local code, message = t('/apisix/admin/ssls/1',
-                 ngx.HTTP_DELETE,
-                 nil,
-                 [[{
-                    "action": "delete"
-                }]]
-                )
+            local code, message = t('/apisix/admin/ssls/1', ngx.HTTP_DELETE)
             ngx.say("[delete] code: ", code, " message: ", message)
         }
     }
@@ -718,14 +655,11 @@ GET /t
                 ngx.HTTP_POST,
                 core.json.encode(data),
                 [[{
-                    "node": {
-                        "value": {
-                            "sni": "test.com"
-                        }
-                    },
-                    "action": "create"
+                    "value": {
+                        "sni": "test.com"
+                    }
                 }]]
-                )
+            )
 
             if code ~= 200 then
                 ngx.status = code
@@ -733,7 +667,7 @@ GET /t
                 return
             end
 
-            local id = string.sub(res.node.key, #"/apisix/ssls/" + 1)
+            local id = string.sub(res.key, #"/apisix/ssls/" + 1)
             local res = assert(etcd.get('/ssls/' .. id))
             local prev_create_time = res.body.node.value.create_time
             assert(prev_create_time ~= nil, "create_time is nil")
@@ -743,7 +677,7 @@ GET /t
             local code, body = t.test('/apisix/admin/ssls/' .. id,
                 ngx.HTTP_PATCH,
                 core.json.encode({create_time = 0, update_time = 1})
-                )
+            )
 
             if code ~= 201 then
                 ngx.status = code
@@ -758,9 +692,7 @@ GET /t
             assert(update_time == 1, "update_time mismatched")
 
             -- clean up
-            local code, body = t.test('/apisix/admin/ssls/' .. id,
-                ngx.HTTP_DELETE
-            )
+            local code, body = t.test('/apisix/admin/ssls/' .. id, ngx.HTTP_DELETE)
             ngx.status = code
             ngx.say(body)
         }
@@ -789,10 +721,7 @@ passed
                 ngx.HTTP_PUT,
                 core.json.encode(data),
                 [[{
-                    "node": {
-                        "key": "/apisix/ssls/1"
-                    },
-                    "action": "set"
+                    "key": "/apisix/ssls/1"
                 }]]
                 )
 
@@ -825,10 +754,7 @@ GET /t
                 ngx.HTTP_PUT,
                 core.json.encode(data),
                 [[{
-                    "node": {
-                        "key": "/apisix/ssls/1"
-                    },
-                    "action": "set"
+                    "key": "/apisix/ssls/1"
                 }]]
                 )
 
